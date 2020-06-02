@@ -1,0 +1,2 @@
+class AdHocObject(object):
+    pass

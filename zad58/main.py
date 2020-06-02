@@ -1,13 +1,17 @@
 
-from minimizer import Minimizer, MinimalizationAlghorithm, MooreAlghorithm, fileToAutomata
+from minimalization.moore import MooreAlghorithm
+from minimalization.loger import clearLog
+from minimalization.helpers import methods
+
 '''
 _   stan akceptujący
 '   stan końcowy
 '''
 def main():
-    automata = fileToAutomata('C:/Projects/Zadania na automaty/zad58/automata.txt')
-    minimizer = Minimizer(MooreAlghorithm())
-    minimizer.minimize(automata)
+    clearLog()
+    automata = methods.fileToAutomata('zad58/zad56.txt')
+    minimizedAutomata = MooreAlghorithm().minimize(automata)
+    print(str(minimizedAutomata))
 
 if __name__ == "__main__":
     main()
