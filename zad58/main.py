@@ -9,7 +9,7 @@ _   stan akceptujący
 '''
 def main():
     clearLog()
-    automata = methods.fileToAutomata('zad58/zad56.txt')
+    automata = methods.fileToAutomata('zad58/kol2.txt')
     minimizedAutomata = MooreAlghorithm().minimize(automata)
     print(str(minimizedAutomata))
 
