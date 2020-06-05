@@ -99,8 +99,6 @@ class HopcroftAlghorithm:
                     # Uzupełnienie list L
                     self.loger.log("\nFilling L")
                     flattenB = ''.join(str(x) for x in B)
-                    elementToReplace = None
-
                     wasFoundInL = False
                     self.loger.log('L before filling: {}'.format(L))
                     for g, element in enumerate(L):
@@ -134,9 +132,15 @@ class HopcroftAlghorithm:
 
     def getAutomataPrintOut(self,P,automata):
         printOut = "\t"
+        helperSet = {noTransitionChar: noTransitionChar}
         for i, symbol in enumerate(automata.transitionTable[0]):
             printOut+=str(i)+"\t"
         printOut+="\n"
+        # iterating two times just to get proper prit out may be costly
+        for subset in P:
+            gluedStates = ''.join(str(x) for x in subset);
+            for state in subset:
+                helperSet[str(state)] = gluedStates
         for subset in P:
             addStartStateMarker = False
             addFinishStateMarker = False
@@ -149,9 +153,8 @@ class HopcroftAlghorithm:
 
             printOut+=acceptingStateChar if addFinishStateMarker else ""
             printOut+=startStateChar if addStartStateMarker else ""
-
             printOut+="\t"
-            printOut+='\t'.join(str(x) for x in automata.transitionTable[subset[0]]);
+            printOut+='\t'.join(helperSet[x] for x in automata.transitionTable[subset[0]]);
             printOut+="\n"
         self.loger.log("\nMinimized automata transition table:\n")
         self.loger.log(printOut)
