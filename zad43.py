@@ -4,7 +4,6 @@
 
 import re
 import random
-
 # podział słowa w na uvuv to de facto to samo co podział na w=ll gdzie l=uv
 
 def getInterchangingParts(word,splitOn, debug=False):
@@ -13,6 +12,7 @@ def getInterchangingParts(word,splitOn, debug=False):
     if debug : print("Regex: {}".format(regex))
     chunkRegex = re.compile(regex)
     sub = chunkRegex.findall(word)
+
     if len(sub) is not 1:
         if debug : print("Nie znaleziono wzorca '{}' w słowie '{}'".format(regex,word))
         return None;
@@ -58,5 +58,5 @@ def check(words,regexes,splitOn="",debug=False):
         print('\n')
     return anwsers
 
-anwsers = check(["igor jacek igor jacek ","igorjacekigorjacek"],["igor jacek","igorjace"], debug=True)
+anwsers = check(["abccabcc"],["(a|b)*"], debug=True)
 
