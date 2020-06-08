@@ -9,54 +9,62 @@ import random
 def getInterchangingParts(word,splitOn, debug=False):
     # u i v oddzielone np. spacją
     regex = r"(.+){}(.+){}\1{}\2".format(splitOn,splitOn,splitOn)
-    if debug : print("Regex: {}".format(regex))
+    if debug : print("\nRegex: {}".format(regex))
     chunkRegex = re.compile(regex)
-    sub = chunkRegex.findall(word)
+    wordLen = len(word)
+    sub = []
+    for i in range(wordLen):
+        if i is 0:
+            continue
+        putin1 = '{'+str(i)+'}'
+        regex = r"(.+)((.+){})\1\2".format(putin1)
+        result = re.compile(regex).findall(word)
+        if result:
+            sub.append(result[0])
 
-    if len(sub) is not 1:
-        if debug : print("Nie znaleziono wzorca '{}' w słowie '{}'".format(regex,word))
-        return None;
-    try:
-        splited = sub[0]
-        u = splited[0]
-        v = splited[1]
-        return {'u':u,'v':v}
-    except:
-        if debug : print("Nie można podzielić słowa '{}' znakiem '{}'".format(word,splitOn))
-    return None
+    return sub
 
 def isFullyMatched(word,regexStr,debug=False):
         regex=re.compile(regexStr.replace("+","|"))
         if regex.fullmatch(word):
-            if debug : print("Część: '{}' PASUJE dp wyrażenia regularnego: '{}'".format(word,regexStr))
             return True
         else:
-             if debug : print("Część: '{}' NIE PASUJE dp wyrażenia regularnego: '{}'".format(word,regexStr))
              return False
 
-def check(words,regexes,splitOn="",debug=False):
+def check(words,regexes,debug=False):
     index = 0
     anwsers = []
     for word in words:
-        parts = getInterchangingParts(word,splitOn, debug)
+        parts = getInterchangingParts(word, debug)
+        if debug : print("Słowo: '{}' dzieli się na:\n".format(word))
+        isCorrect = False
         if not parts:
-            continue
-        u = parts.get('u')
-        v = parts.get('v')
-        if debug : print("Słowo: '{}' dzieli się na u: '{}' i v: '{}'".format(word,u,v))
-        isUMatched = isFullyMatched(u,regexes[index],debug)
-        isVMatched = isFullyMatched(v,regexes[index],debug)
-        if isUMatched and not isVMatched:
-            if debug : print("\n{}. jest dobre".format(index+1))
-            anwsers.append(True)
-        else:
-            if debug : print("\n{}. jest niedobre".format(index+1))
-            anwsers.append(False)
+            if debug : print('nic\n')
+        for pair in parts:
+            u = pair[0]
+            v = pair[1]
+            isUMatched = isFullyMatched(u,regexes[index],debug)
+            isVMatched = isFullyMatched(v,regexes[index],debug)
+            if isCorrect is False:
+                isCorrect = True if isUMatched is True and isVMatched is False else False
+                if isCorrect: anwsers.append(isCorrect)
+
+            if isUMatched:
+                if debug : print("u: '{}' pasuje do wzorca: {}".format(u,regexes[index]))
+            else:
+                if debug : print("u: '{}' nie pasuje do wzorca: {}".format(u,regexes[index]))
+
+            if isVMatched:
+                if debug : print("v: '{}' pasuje do wzorca: {}".format(v,regexes[index]))
+            else:
+                if debug : print("v: '{}' nie pasuje do wzorca: {}".format(v,regexes[index]))
+
+            if debug : print('---------------------------------')
+
+        if debug : print("TAK") if isCorrect else print("NIE")
+        if debug : print('\n+++++++++++++++++++++++++++++++++\n')
         index+=1
-        print('\n')
-        print('---------------------------------')
-        print('\n')
     return anwsers
 
-anwsers = check(["abccabcc"],["(a|b)*"], debug=True)
+anwsers = check(["abccabcc","abbcabbc","abab"],["(a|b)*","(a|b)*","b*"], debug=True)
 
