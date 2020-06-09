@@ -57,10 +57,10 @@ class HopcroftAlghorithm:
 
         # put smaller list on L
         toPutOnListL = []
-        if len(P) < len(automata.finalStates):
-            toPutOnListL = ''.join(str(x) for x in P)
+        if len(P[0]) < len(P[1]):
+            toPutOnListL = ''.join(str(x) for x in P[0])
         else:
-            toPutOnListL = ''.join(str(x) for x in automata.finalStates)
+            toPutOnListL = ''.join(str(x) for x in P[1])
 
         for i,d in enumerate(automata.transitionTable[0]):
             L.append('{}{}'.format(toPutOnListL,i))
@@ -83,24 +83,24 @@ class HopcroftAlghorithm:
                     whatEnteres += potentialEntry
 
             # łamanie
-            self.loger.log('State: {}\nSymbol: {}'.format(state,symbol))
-            self.loger.log('What to break i.e what enters {} by {}? {}'.format(state,symbol,whatEnteres))
+            if not whatEnteres:
+                self.loger.log('Nothing enters {} via symbol: {}'.format(itemFromL[:-1],symbol))
+                loopCounter+=1
+                continue
+            self.loger.log('States: {} are entering {} via symbol: {}'.format(whatEnteres,itemFromL[:-1],symbol))
             tmpP = copy.deepcopy(P)
+            tmpL = copy.deepcopy(L)
             self.loger.log('\nLooking for subset \'B\' of P to break apart')
             for i, B in enumerate(P):
-                self.loger.log('B: {}'.format(B))
                 splited = splitOff(B, whatEnteres)
-                self.loger.log('Broken B: {}'.format(splited))
                 if len(splited) > 1:
-                    tmpP.pop(i)
+                    self.loger.log('\n{}. B: {} broken by: {} to: {}'.format(i+1,B,whatEnteres,splited))
+                    tmpP.remove(B)
                     for split in splited:
                         tmpP.append(split)
                     self.loger.log('P after breaking up: {}'.format(tmpP))
                     # Uzupełnienie list L
-                    self.loger.log("\nFilling L")
                     flattenB = ''.join(str(x) for x in B)
-                    elementToReplace = None
-
                     wasFoundInL = False
                     self.loger.log('L before filling: {}'.format(L))
                     for g, element in enumerate(L):
@@ -124,7 +124,8 @@ class HopcroftAlghorithm:
                             L.append(smallerBreak+str(i))
                             self.loger.log('Added {} to L'.format(smallerBreak+str(i)))
                     self.loger.log('L after filling: {}'.format(L))
-
+                else:
+                    self.loger.log('\n{}. B: {} cannot be broken by {}'.format(i+1,B,whatEnteres))
             P = tmpP
             loopCounter+=1
         self.loger.log("\n")
@@ -134,9 +135,15 @@ class HopcroftAlghorithm:
 
     def getAutomataPrintOut(self,P,automata):
         printOut = "\t"
+        helperSet = {noTransitionChar: noTransitionChar}
         for i, symbol in enumerate(automata.transitionTable[0]):
             printOut+=str(i)+"\t"
         printOut+="\n"
+        # iterating two times just to get proper prit out may be costly
+        for subset in P:
+            gluedStates = ''.join(str(x) for x in subset);
+            for state in subset:
+                helperSet[str(state)] = gluedStates
         for subset in P:
             addStartStateMarker = False
             addFinishStateMarker = False
@@ -149,9 +156,8 @@ class HopcroftAlghorithm:
 
             printOut+=acceptingStateChar if addFinishStateMarker else ""
             printOut+=startStateChar if addStartStateMarker else ""
-
             printOut+="\t"
-            printOut+='\t'.join(str(x) for x in automata.transitionTable[subset[0]]);
+            printOut+='\t'.join(helperSet[x] for x in automata.transitionTable[subset[0]]);
             printOut+="\n"
         self.loger.log("\nMinimized automata transition table:\n")
         self.loger.log(printOut)
