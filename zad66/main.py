@@ -17,17 +17,16 @@ def main():
     # W pliku log.txt jest szczegółowy opis kroków jakie podejmuje algorytm
     logPath = sys.argv[0]
     fileName = sys.argv[1]
-    alghorithmName = sys.argv[2].lower()
-    print(fileName)
+    alghorithmName = sys.argv[2].lower().strip()
     if logPath:
         logPath = 'zad66/log.txt'
     automata = minimalistDFAfromFile(fileName)
     hopcroft = HopcroftAlghorithm(logPath)
 
-    if alghorithmName is 'moore':
+    if alghorithmName == 'moore':
         moore = MooreAlghorithm(logPath)
         print(moore.minimize(automata))
-    elif alghorithmName is 'hopcroft':
+    elif alghorithmName == 'hopcroft':
         print(hopcroft.minimize(automata))
     else:
         print(hopcroft.minimize(automata))

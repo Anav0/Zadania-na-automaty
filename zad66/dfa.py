@@ -5,11 +5,16 @@ class MinimalistDFA:
     finalStates = []
     transitionTable = []
     entriesTable = []
+    lookup = {}
 
     def __init__(self, startingState, finalStates, transitionTable):
         self.startingState = startingState
         self.finalStates = finalStates
         self.transitionTable = transitionTable
+
+    def prepereLookupTable(self):
+        for i, s in enumerate(self.transitionTable):
+            self.lookup[i] = chr(ord('a') + int(i))
 
     def prepereEntriesTable(self):
         N = len(self.transitionTable[0])
