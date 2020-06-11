@@ -1,4 +1,5 @@
 from loger import Loger
+from helpers import splitOff, getAutomataPrintOut
 
 class MooreAlghorithm:
     markers = []
@@ -14,8 +15,29 @@ class MooreAlghorithm:
             printOut += '{}{}\n'.format(whitespace,row[i:])
         return printOut
 
+    def glueStates(self):
+        P = []
+        whatWasGlued = []
+        total = []
+        for i,row in enumerate(self.markers):
+            cutRow = row[i:]
+            total.append(i)
+            glued = []
+            for k, column in enumerate(cutRow):
+                if k == 0: continue
+                truePos = k+i
+                if column == 0 and truePos not in whatWasGlued:
+                    glued.append(truePos)
+                    whatWasGlued.append(truePos)
+            if glued:
+                P.append(glued+[i])
+                whatWasGlued.append(i)
+
+        # add states that were not glued
+        P+=[[x] for x in splitOff(total,whatWasGlued)[0]]
+        return P
+
     def minimize(self,automata):
-        automata.prepereLookupTable()
         automata.prepereEntriesTable()
         L = []
         N = len(automata.transitionTable)
@@ -24,7 +46,8 @@ class MooreAlghorithm:
         for i, transition in enumerate(automata.transitionTable):
             for finalState in automata.finalStates:
                 if i not in automata.finalStates:
-                    L.append([i, finalState])
+                    L.append([finalState, i])
+                    self.markers[finalState][i] = 1
                     self.markers[i][finalState] = 1
 
         index = 1
@@ -45,22 +68,24 @@ class MooreAlghorithm:
                 entries1 = automata.entriesTable[pair[0]][symbol]
                 entries2 = automata.entriesTable[pair[1]][symbol]
                 self.loger.log('---------')
-                self.loger.log('Pair: [{},{}] symbol: {}'.format(automata.lookup[pair[0]],automata.lookup[pair[1]],symbol))
+                self.loger.log('Pair: [{},{}] symbol: {}'.format(pair[0],pair[1],symbol))
                 if entries1 is None or entries2 is None:
                     continue
-                self.loger.log('{} is entered by: '.format(automata.lookup[pair[0]])+' '.join(automata.lookup[x] for x in entries1))
-                self.loger.log('{} is entered by: '.format(automata.lookup[pair[1]])+' '.join(automata.lookup[x] for x in entries2))
+                self.loger.log('{} is entered by: '.format(pair[0])+' '.join(str(x) for x in entries1))
+                self.loger.log('{} is entered by: '.format(pair[1])+' '.join(str(x) for x in entries2))
                 for entry in entries1:
                     for entry2 in entries2:
                         if self.markers[entry][entry2] == 0 and self.markers[entry2][entry] == 0:
-                            self.loger.log('Can be added: {} {}'.format(automata.lookup[entry], automata.lookup[entry2]))
+                            self.loger.log('Can be added: {} {}'.format(entry, entry2))
                             L.append([entry, entry2])
                             self.markers[entry][entry2] = index+1
+                            self.markers[entry2][entry] = index+1
             rawIndex+=1
         self.loger.log('\n')
-        self.loger.log(self.getMarkersPrint())
-
-
-
-
-
+        printOut = self.getMarkersPrint()
+        P = self.glueStates()
+        automataPrintOut = getAutomataPrintOut(P,automata)
+        self.loger.log(printOut)
+        self.loger.log('Glued states: {}'.format(str(P)))
+        self.loger.log(automataPrintOut)
+        return automataPrintOut

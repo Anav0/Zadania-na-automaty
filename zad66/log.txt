@@ -1,165 +1,418 @@
-Tura 1
----------
-Pair: [a,f] symbol: 0
----------
-Pair: [a,f] symbol: 1
-a is entered by: b
-f is entered by: c d f g
-Can be added: b c
-Can be added: b d
----------
-Pair: [a,g] symbol: 0
----------
-Pair: [a,g] symbol: 1
-a is entered by: b
-g is entered by: e
-Can be added: b e
----------
-Pair: [b,f] symbol: 0
----------
-Pair: [b,f] symbol: 1
-b is entered by: a
-f is entered by: c d f g
-Can be added: a c
-Can be added: a d
----------
-Pair: [b,g] symbol: 0
----------
-Pair: [b,g] symbol: 1
-b is entered by: a
-g is entered by: e
-Can be added: a e
----------
-Pair: [c,f] symbol: 0
-c is entered by: h
-f is entered by: e f
-Can be added: h e
----------
-Pair: [c,f] symbol: 1
-c is entered by: h
-f is entered by: c d f g
-Can be added: h c
-Can be added: h d
----------
-Pair: [c,g] symbol: 0
-c is entered by: h
-g is entered by: g
----------
-Pair: [c,g] symbol: 1
-c is entered by: h
-g is entered by: e
----------
-Pair: [d,f] symbol: 0
----------
-Pair: [d,f] symbol: 1
----------
-Pair: [d,g] symbol: 0
----------
-Pair: [d,g] symbol: 1
----------
-Pair: [e,f] symbol: 0
-e is entered by: c d
-f is entered by: e f
-Can be added: c e
-Can be added: d e
----------
-Pair: [e,f] symbol: 1
----------
-Pair: [e,g] symbol: 0
-e is entered by: c d
-g is entered by: g
----------
-Pair: [e,g] symbol: 1
----------
-Pair: [h,f] symbol: 0
-h is entered by: a b
-f is entered by: e f
----------
-Pair: [h,f] symbol: 1
----------
-Pair: [h,g] symbol: 0
-h is entered by: a b
-g is entered by: g
----------
-Pair: [h,g] symbol: 1
 
-Tura 2
----------
-Pair: [b,c] symbol: 0
----------
-Pair: [b,c] symbol: 1
-b is entered by: a
-c is entered by: h
-Can be added: a h
----------
-Pair: [b,d] symbol: 0
----------
-Pair: [b,d] symbol: 1
----------
-Pair: [b,e] symbol: 0
----------
-Pair: [b,e] symbol: 1
----------
-Pair: [a,c] symbol: 0
----------
-Pair: [a,c] symbol: 1
-a is entered by: b
-c is entered by: h
-Can be added: b h
----------
-Pair: [a,d] symbol: 0
----------
-Pair: [a,d] symbol: 1
----------
-Pair: [a,e] symbol: 0
----------
-Pair: [a,e] symbol: 1
----------
-Pair: [h,e] symbol: 0
-h is entered by: a b
-e is entered by: c d
----------
-Pair: [h,e] symbol: 1
----------
-Pair: [h,c] symbol: 0
-h is entered by: a b
-c is entered by: h
----------
-Pair: [h,c] symbol: 1
----------
-Pair: [h,d] symbol: 0
----------
-Pair: [h,d] symbol: 1
----------
-Pair: [c,e] symbol: 0
-c is entered by: h
-e is entered by: c d
----------
-Pair: [c,e] symbol: 1
+======== 1. loop ========
 
-Tura 3
----------
-Pair: [d,e] symbol: 0
----------
-Pair: [d,e] symbol: 1
----------
-Pair: [a,h] symbol: 0
----------
-Pair: [a,h] symbol: 1
+P: [[11], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
+L: ['110', '111']
+States: [0, 0] are entering 11 via symbol: 0
 
-Tura 4
----------
-Pair: [b,h] symbol: 0
----------
-Pair: [b,h] symbol: 1
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [0, 0]
+
+2. B: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] broken by: [0, 0] to: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [0]]
+P after breaking up: [[11], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [0]]
+L before filling: ['111']
+Added 123456789100 to L
+Added 123456789101 to L
+L after filling: ['111', '123456789100', '123456789101']
+
+======== 2. loop ========
+
+P: [[11], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [0]]
+L: ['111', '123456789100', '123456789101']
+States: [0, 0] are entering 11 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [0, 0]
+
+2. B: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] cannot be broken by [0, 0]
+
+3. B: [0] cannot be broken by [0, 0]
+
+======== 3. loop ========
+
+P: [[11], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [0]]
+L: ['123456789100', '123456789101']
+States: [0, 1, 2, 3, 4, 5, 6, 7, 8, 0] are entering 12345678910 via symbol: 0
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [0, 1, 2, 3, 4, 5, 6, 7, 8, 0]
+
+2. B: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] broken by: [0, 1, 2, 3, 4, 5, 6, 7, 8, 0] to: [[9, 10], [1, 2, 3, 4, 5, 6, 7, 8]]
+P after breaking up: [[11], [0], [9, 10], [1, 2, 3, 4, 5, 6, 7, 8]]
+L before filling: ['123456789101']
+Replaced 123456789101 with 9101 in L
+Replaced 123456789101 with 123456781 in L
+L after filling: ['123456781', '9101']
+
+3. B: [0] cannot be broken by [0, 1, 2, 3, 4, 5, 6, 7, 8, 0]
+
+======== 4. loop ========
+
+P: [[11], [0], [9, 10], [1, 2, 3, 4, 5, 6, 7, 8]]
+L: ['123456781', '9101']
+States: [0, 1, 2, 3, 4, 5, 6, 7] are entering 12345678 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [0, 1, 2, 3, 4, 5, 6, 7]
+
+2. B: [0] cannot be broken by [0, 1, 2, 3, 4, 5, 6, 7]
+
+3. B: [9, 10] cannot be broken by [0, 1, 2, 3, 4, 5, 6, 7]
+
+4. B: [1, 2, 3, 4, 5, 6, 7, 8] broken by: [0, 1, 2, 3, 4, 5, 6, 7] to: [[8], [1, 2, 3, 4, 5, 6, 7]]
+P after breaking up: [[11], [0], [9, 10], [8], [1, 2, 3, 4, 5, 6, 7]]
+L before filling: ['9101']
+Added 80 to L
+Added 81 to L
+L after filling: ['9101', '80', '81']
+
+======== 5. loop ========
+
+P: [[11], [0], [9, 10], [8], [1, 2, 3, 4, 5, 6, 7]]
+L: ['9101', '80', '81']
+States: [8, 0] are entering 910 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [8, 0]
+
+2. B: [0] cannot be broken by [8, 0]
+
+3. B: [9, 10] cannot be broken by [8, 0]
+
+4. B: [8] cannot be broken by [8, 0]
+
+5. B: [1, 2, 3, 4, 5, 6, 7] cannot be broken by [8, 0]
+
+======== 6. loop ========
+
+P: [[11], [0], [9, 10], [8], [1, 2, 3, 4, 5, 6, 7]]
+L: ['80', '81']
+States: [7] are entering 8 via symbol: 0
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [7]
+
+2. B: [0] cannot be broken by [7]
+
+3. B: [9, 10] cannot be broken by [7]
+
+4. B: [8] cannot be broken by [7]
+
+5. B: [1, 2, 3, 4, 5, 6, 7] broken by: [7] to: [[1, 2, 3, 4, 5, 6], [7]]
+P after breaking up: [[11], [0], [9, 10], [8], [1, 2, 3, 4, 5, 6], [7]]
+L before filling: ['81']
+Added 70 to L
+Added 71 to L
+L after filling: ['81', '70', '71']
+
+======== 7. loop ========
+
+P: [[11], [0], [9, 10], [8], [1, 2, 3, 4, 5, 6], [7]]
+L: ['81', '70', '71']
+States: [7] are entering 8 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [7]
+
+2. B: [0] cannot be broken by [7]
+
+3. B: [9, 10] cannot be broken by [7]
+
+4. B: [8] cannot be broken by [7]
+
+5. B: [1, 2, 3, 4, 5, 6] cannot be broken by [7]
+
+6. B: [7] cannot be broken by [7]
+
+======== 8. loop ========
+
+P: [[11], [0], [9, 10], [8], [1, 2, 3, 4, 5, 6], [7]]
+L: ['70', '71']
+States: [6] are entering 7 via symbol: 0
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [6]
+
+2. B: [0] cannot be broken by [6]
+
+3. B: [9, 10] cannot be broken by [6]
+
+4. B: [8] cannot be broken by [6]
+
+5. B: [1, 2, 3, 4, 5, 6] broken by: [6] to: [[1, 2, 3, 4, 5], [6]]
+P after breaking up: [[11], [0], [9, 10], [8], [7], [1, 2, 3, 4, 5], [6]]
+L before filling: ['71']
+Added 60 to L
+Added 61 to L
+L after filling: ['71', '60', '61']
+
+6. B: [7] cannot be broken by [6]
+
+======== 9. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [1, 2, 3, 4, 5], [6]]
+L: ['71', '60', '61']
+States: [6] are entering 7 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [6]
+
+2. B: [0] cannot be broken by [6]
+
+3. B: [9, 10] cannot be broken by [6]
+
+4. B: [8] cannot be broken by [6]
+
+5. B: [7] cannot be broken by [6]
+
+6. B: [1, 2, 3, 4, 5] cannot be broken by [6]
+
+7. B: [6] cannot be broken by [6]
+
+======== 10. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [1, 2, 3, 4, 5], [6]]
+L: ['60', '61']
+States: [5] are entering 6 via symbol: 0
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [5]
+
+2. B: [0] cannot be broken by [5]
+
+3. B: [9, 10] cannot be broken by [5]
+
+4. B: [8] cannot be broken by [5]
+
+5. B: [7] cannot be broken by [5]
+
+6. B: [1, 2, 3, 4, 5] broken by: [5] to: [[1, 2, 3, 4], [5]]
+P after breaking up: [[11], [0], [9, 10], [8], [7], [6], [1, 2, 3, 4], [5]]
+L before filling: ['61']
+Added 50 to L
+Added 51 to L
+L after filling: ['61', '50', '51']
+
+7. B: [6] cannot be broken by [5]
+
+======== 11. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [6], [1, 2, 3, 4], [5]]
+L: ['61', '50', '51']
+States: [5] are entering 6 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [5]
+
+2. B: [0] cannot be broken by [5]
+
+3. B: [9, 10] cannot be broken by [5]
+
+4. B: [8] cannot be broken by [5]
+
+5. B: [7] cannot be broken by [5]
+
+6. B: [6] cannot be broken by [5]
+
+7. B: [1, 2, 3, 4] cannot be broken by [5]
+
+8. B: [5] cannot be broken by [5]
+
+======== 12. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [6], [1, 2, 3, 4], [5]]
+L: ['50', '51']
+States: [3, 4] are entering 5 via symbol: 0
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [3, 4]
+
+2. B: [0] cannot be broken by [3, 4]
+
+3. B: [9, 10] cannot be broken by [3, 4]
+
+4. B: [8] cannot be broken by [3, 4]
+
+5. B: [7] cannot be broken by [3, 4]
+
+6. B: [6] cannot be broken by [3, 4]
+
+7. B: [1, 2, 3, 4] broken by: [3, 4] to: [[1, 2], [3, 4]]
+P after breaking up: [[11], [0], [9, 10], [8], [7], [6], [5], [1, 2], [3, 4]]
+L before filling: ['51']
+Added 340 to L
+Added 341 to L
+L after filling: ['51', '340', '341']
+
+8. B: [5] cannot be broken by [3, 4]
+
+======== 13. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [6], [5], [1, 2], [3, 4]]
+L: ['51', '340', '341']
+States: [3, 4] are entering 5 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [3, 4]
+
+2. B: [0] cannot be broken by [3, 4]
+
+3. B: [9, 10] cannot be broken by [3, 4]
+
+4. B: [8] cannot be broken by [3, 4]
+
+5. B: [7] cannot be broken by [3, 4]
+
+6. B: [6] cannot be broken by [3, 4]
+
+7. B: [5] cannot be broken by [3, 4]
+
+8. B: [1, 2] cannot be broken by [3, 4]
+
+9. B: [3, 4] cannot be broken by [3, 4]
+
+======== 14. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [6], [5], [1, 2], [3, 4]]
+L: ['340', '341']
+States: [2] are entering 34 via symbol: 0
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [2]
+
+2. B: [0] cannot be broken by [2]
+
+3. B: [9, 10] cannot be broken by [2]
+
+4. B: [8] cannot be broken by [2]
+
+5. B: [7] cannot be broken by [2]
+
+6. B: [6] cannot be broken by [2]
+
+7. B: [5] cannot be broken by [2]
+
+8. B: [1, 2] broken by: [2] to: [[1], [2]]
+P after breaking up: [[11], [0], [9, 10], [8], [7], [6], [5], [3, 4], [1], [2]]
+L before filling: ['341']
+Added 20 to L
+Added 21 to L
+L after filling: ['341', '20', '21']
+
+9. B: [3, 4] cannot be broken by [2]
+
+======== 15. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [6], [5], [3, 4], [1], [2]]
+L: ['341', '20', '21']
+States: [2] are entering 34 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [2]
+
+2. B: [0] cannot be broken by [2]
+
+3. B: [9, 10] cannot be broken by [2]
+
+4. B: [8] cannot be broken by [2]
+
+5. B: [7] cannot be broken by [2]
+
+6. B: [6] cannot be broken by [2]
+
+7. B: [5] cannot be broken by [2]
+
+8. B: [3, 4] cannot be broken by [2]
+
+9. B: [1] cannot be broken by [2]
+
+10. B: [2] cannot be broken by [2]
+
+======== 16. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [6], [5], [3, 4], [1], [2]]
+L: ['20', '21']
+States: [1] are entering 2 via symbol: 0
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [1]
+
+2. B: [0] cannot be broken by [1]
+
+3. B: [9, 10] cannot be broken by [1]
+
+4. B: [8] cannot be broken by [1]
+
+5. B: [7] cannot be broken by [1]
+
+6. B: [6] cannot be broken by [1]
+
+7. B: [5] cannot be broken by [1]
+
+8. B: [3, 4] cannot be broken by [1]
+
+9. B: [1] cannot be broken by [1]
+
+10. B: [2] cannot be broken by [1]
+
+======== 17. loop ========
+
+P: [[11], [0], [9, 10], [8], [7], [6], [5], [3, 4], [1], [2]]
+L: ['21']
+States: [1] are entering 2 via symbol: 1
+
+Looking for subset 'B' of P to break apart
+
+1. B: [11] cannot be broken by [1]
+
+2. B: [0] cannot be broken by [1]
+
+3. B: [9, 10] cannot be broken by [1]
+
+4. B: [8] cannot be broken by [1]
+
+5. B: [7] cannot be broken by [1]
+
+6. B: [6] cannot be broken by [1]
+
+7. B: [5] cannot be broken by [1]
+
+8. B: [3, 4] cannot be broken by [1]
+
+9. B: [1] cannot be broken by [1]
+
+10. B: [2] cannot be broken by [1]
 
 
-[0, 0, 2, 2, 2, 1, 1, 3]
-   [0, 2, 2, 2, 1, 1, 3]
-      [0, 0, 2, 1, 1, 0]
-         [0, 2, 1, 1, 0]
-            [0, 1, 1, 0]
-               [0, 0, 0]
-                  [0, 0]
-                     [0]
+Final P: [[11], [0], [9, 10], [8], [7], [6], [5], [3, 4], [1], [2]]
+
+Minimized automata transition table:
+
+	0	1	
+11'	11	11
+0_	1	1
+910	910	910
+8	910	910
+7	8	8
+6	7	7
+5	6	6
+34	5	5
+1	2	2
+2	34	34
 
