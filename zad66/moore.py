@@ -18,10 +18,10 @@ class MooreAlghorithm:
     def glueStates(self):
         P = []
         whatWasGlued = []
-        total = []
+        allStates = []
         for i,row in enumerate(self.markers):
             cutRow = row[i:]
-            total.append(i)
+            allStates.append(i)
             glued = []
             for k, column in enumerate(cutRow):
                 if k == 0: continue
@@ -34,7 +34,8 @@ class MooreAlghorithm:
                 whatWasGlued.append(i)
 
         # add states that were not glued
-        P+=[[x] for x in splitOff(total,whatWasGlued)[0]]
+        diff = splitOff(allStates,whatWasGlued)[0]
+        P+=[[x] for x in diff]
         return P
 
     def minimize(self,automata):
