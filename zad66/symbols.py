@@ -1,0 +1,3 @@
+acceptingStateChar = "'"
+startStateChar = "_"
+noTransitionChar = "-"
