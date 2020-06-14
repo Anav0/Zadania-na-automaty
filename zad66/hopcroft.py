@@ -85,8 +85,12 @@ class HopcroftAlghorithm:
                             wasFoundInL = True
 
                     if not wasFoundInL:
-                        splited.sort(reverse=True)
-                        smallerBreak = splited[0]
+                        if len(splited[0]) != len(splited[1]):
+                            splited = sorted(splited,key=len)
+                            smallerBreak = splited[0]
+                        else:
+                            smallerBreak = splited[1]
+
                         smallerBreak = '-'.join(str(x) for x in smallerBreak)
                         for i, transition in enumerate(automata.transitionTable[0]):
                             L.append(smallerBreak+symbolSplitChar+str(i))
