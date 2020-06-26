@@ -14,8 +14,6 @@ def getInterchangingParts(word,splitOn, debug=False):
     wordLen = len(word)
     sub = []
     for i in range(wordLen):
-        if i is 0:
-            continue
         putin1 = '{'+str(i)+'}'
         regex = r"(.+)((.+){})\1\2".format(putin1)
         result = re.compile(regex).findall(word)
@@ -66,5 +64,6 @@ def check(words,regexes,debug=False):
         index+=1
     return anwsers
 
-anwsers = check(["abccabcc","abbcabbc","abab"],["(a|b)*","(a|b)*","b*"], debug=True)
+#anwsers = check(["abccabcc","abbcabbc","abab"],["(a|b)*","(a|b)*","b*"], debug=True)
+anwsers = check(["caacbcaacb"],["c|a|b*|c"], debug=True)
 
